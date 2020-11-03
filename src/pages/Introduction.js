@@ -33,17 +33,17 @@ const topics = [
     color: 'f8961e'
   },
   {
-    id: 5,
+    id: 6,
     name: 'Ruby',
     color: 'e63946'
   },
   {
-    id: 6,
+    id: 7,
     name: 'C',
     color: 'fb8b24'
   },
   {
-    id: 7,
+    id: 8,
     name: 'C++',
     color: '06d6a0'
   },
