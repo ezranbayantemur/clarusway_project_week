@@ -6,7 +6,7 @@ import {searchbarStyle} from '../styles';
 const SearchBar = (props) => {
   return (
     <View style={searchbarStyle.container}>
-      <Icon name="magnify" size={20} color="gray" />
+      <Icon name="magnify" size={18} color="gray" />
       <TextInput
         style={searchbarStyle.input}
         placeholder="Search a city.."

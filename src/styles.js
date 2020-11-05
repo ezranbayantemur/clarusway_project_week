@@ -2,28 +2,35 @@ import {Dimensions, StyleSheet} from 'react-native';
 
 export const searchbarStyle = StyleSheet.create({
   container: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     padding: 5,
+    margin: 10,
     borderRadius: 10,
-    width: Dimensions.get("window").width * 0.8,
     alignSelf: 'center',
-    top: 10,
-    left: 10,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    width: Dimensions.get('window').width * 0.8,
   },
   input: {
-    padding: 0,
-    marginLeft: 5
+    paddingVertical: 0,
   },
 });
 
 export const cityStyle = StyleSheet.create({
   container: {
-
+    backgroundColor: 'white',
+    padding: 5,
+    margin: 10,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#e0e0e0",
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   text: {
-
+    color: "#424242",
+    fontWeight: 'bold',
+    marginLeft: 5
   },
 });
 
