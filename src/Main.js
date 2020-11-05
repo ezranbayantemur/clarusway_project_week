@@ -4,6 +4,8 @@ import {SafeAreaView, View, Text, FlatList} from 'react-native';
 import MapView from 'react-native-maps';
 import {City, RestaurantDetail, SearchBar} from './components';
 
+let originalList = [];
+
 const Main = (props) => {
   const [cityList, setCityList] = useState([]);
 
@@ -12,11 +14,23 @@ const Main = (props) => {
       'https://opentable.herokuapp.com/api/cities',
     );
     setCityList(data.cities);
+    originalList = [...data.cities];
   };
 
   useEffect(() => {
     fetchCities();
   }, []);
+
+  const onCitySearch = (text) => {
+    const filteredList = originalList.filter(item => {
+      const userText = text.toUpperCase();
+      const cityName = item.toUpperCase();
+
+      return cityName.indexOf(userText) > -1;
+    })
+
+    setCityList(filteredList);
+  };
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -31,7 +45,7 @@ const Main = (props) => {
           }}
         />
         <View style={{position: 'absolute'}}>
-          <SearchBar />
+          <SearchBar onSearch={onCitySearch} />
           <FlatList
             horizontal
             keyExtractor={(_, index) => index.toString()}
