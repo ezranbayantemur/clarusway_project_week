@@ -1,14 +1,18 @@
 import Axios from 'axios';
 import React, {useEffect, useState, useRef} from 'react';
-import {SafeAreaView, View, Text, FlatList} from 'react-native';
+import {SafeAreaView, View, Text, FlatList, Modal} from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 import {City, RestaurantDetail, SearchBar} from './components';
+
+import { mapStyle } from './styles'
 
 let originalList = [];
 
 const Main = (props) => {
+  const [modalFlag, setModalFlag] = useState(false);
   const [cityList, setCityList] = useState([]);
   const [restaurants, setRestaurants] = useState([]);
+  const [selectedRestaurant, setSelectedRestaurant] = useState("");
   const mapRef = useRef(null);
 
   const fetchCities = async () => {
@@ -57,13 +61,18 @@ const Main = (props) => {
       },
     });
 
-    console.log(restaurants);
   };
+
+  const onRestaurantSelect = (restaurant) => {
+    setSelectedRestaurant(restaurant);
+    setModalFlag(true)
+  }
 
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={{flex: 1}}>
         <MapView
+          customMapStyle={mapStyle}
           ref={mapRef}
           style={{flex: 1}}
           initialRegion={{
@@ -79,6 +88,7 @@ const Main = (props) => {
                 latitude: r.lat,
                 longitude: r.lng,
               }}
+              onPress={() => onRestaurantSelect(r)}
             />
           ))}
         </MapView>
@@ -93,6 +103,13 @@ const Main = (props) => {
               <City cityName={item} onSelect={() => onCitySelect(item)} />
             )}
           />
+
+          <RestaurantDetail
+            isVisible={modalFlag}
+            restaurant={selectedRestaurant}
+            onClose={() => setModalFlag(false)}
+          />
+
         </View>
       </View>
     </SafeAreaView>
