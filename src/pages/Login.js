@@ -28,7 +28,7 @@ const Login = (props) => {
         Alert.alert('ClarusChat', resolveAuthError('auth/null-value'));
       } else {
         await auth().signInWithEmailAndPassword(email, password);
-        alert("OK")
+        props.navigation.navigate("Timeline");
       }
     } catch (error) {
       Alert.alert('ClarusChat', resolveAuthError(error.code));
