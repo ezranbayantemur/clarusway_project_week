@@ -23,7 +23,7 @@ const Header = (props) => {
         <Icon 
           name="login" 
           size={30} 
-          color="#69007f" 
+          color="#69007f"
           onPress={props.onLogOut}
         />
       </View>
