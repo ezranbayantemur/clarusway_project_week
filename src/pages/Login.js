@@ -24,7 +24,12 @@ const Login = (props) => {
     //   .then(() => alert("OK"))
     //   .catch((err) => Alert.alert("ClarusChat", resolveAuthError(err.code)));
     try {
-      await auth().signInWithEmailAndPassword(email, password);
+      if (email === '' || password === '') {
+        Alert.alert('ClarusChat', resolveAuthError('auth/null-value'));
+      } else {
+        await auth().signInWithEmailAndPassword(email, password);
+        alert("OK")
+      }
     } catch (error) {
       Alert.alert('ClarusChat', resolveAuthError(error.code));
     }
