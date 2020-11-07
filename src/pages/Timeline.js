@@ -10,18 +10,27 @@ import {PostItem, PostInput, Header, TopicSelectModal} from '../components';
 const user = auth().currentUser;
 
 const Timeline = () => {
+  const [postList, setPostList] = useState([]);
   const [selectedTopic, setSelectedTopic] = useState(null);
   const [topicModalFlag, setTopicModalFlag] = useState(true);
 
   const selectingTopic = (value) => {
+    database().ref(`/${selectedTopic}/`).off('value');
+
     setSelectedTopic(value);
     setTopicModalFlag(false);
 
     database()
-      .ref()
+      .ref(`${value}`)
       .on('value', (snapshot) => {
-        console.log("UPDATE......")
-        console.log(snapshot.val())
+        const data = snapshot.val();
+        const formattedData = Object.keys(data).map((key) => ({...data[key]}));
+
+        formattedData.sort((a, b) => {
+          return new Date(b.time) - new Date(a.time);
+        });
+
+        setPostList(formattedData);
       });
   };
 
@@ -29,11 +38,13 @@ const Timeline = () => {
     const postObject = {
       userMail: user.email,
       postText: value,
-      time: moment().toISOString()
-    }
+      time: moment().toISOString(),
+    };
 
     database().ref(`${selectedTopic}`).push(postObject);
   };
+
+  const renderPosts = ({item}) => <PostItem post={item} />;
 
   return (
     <SafeAreaView style={timelinePage.container}>
@@ -41,9 +52,14 @@ const Timeline = () => {
         <Header
           title={selectedTopic}
           onTopicModalSelect={() => setTopicModalFlag(true)}
+          onLogOut={() => auth().signOut()}
         />
 
-        <FlatList data={[]} renderItem={() => null} />
+        <FlatList
+          keyExtractor={(_, i) => i.toString()}
+          data={postList}
+          renderItem={renderPosts}
+        />
 
         <PostInput onSendPost={sendingPost} />
 
