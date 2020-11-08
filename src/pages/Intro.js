@@ -10,6 +10,7 @@ import {useDispatch} from 'react-redux';
 import {introPage} from './styles';
 import axios from 'axios';
 import {CategorySelectModal, TimerComponent} from '../components';
+import { MyComponent } from 'my-test-component-ezran'
 
 const Intro = (props) => {
   const [timerFlag, setTimerFlag] = useState(false);
@@ -44,6 +45,7 @@ const Intro = (props) => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <View style={{flex: 1}}>
+        <MyComponent title="ClarusWay!" />
         <View style={introPage.container}>
           <Text style={introPage.bannerText}>Tırı Vırı!</Text>
         </View>
