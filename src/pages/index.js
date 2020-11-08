@@ -1,3 +1,3 @@
-export * from './Login';
-export * from './Sign';
-export * from './Timeline';
+export * from './Intro';
+export * from './Finish';
+export * from './Questions';

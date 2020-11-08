@@ -1,35 +1,25 @@
 import React from 'react';
-import auth from '@react-native-firebase/auth';
+import {createStore} from 'redux';
+import {Provider} from 'react-redux';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import {Login, Sign, Timeline} from './pages';
+import {initialState} from './context/store';
+import {reducer} from './context/reducer';
 
-const Stack = createStackNavigator();
+import {Intro, Questions, Finish} from './pages';
 
 function Router() {
-  const [hasSession, setSession] = React.useState(false);
-
-  React.useEffect(() => {
-    auth().onAuthStateChanged((user) => {
-      setSession(user);
-    });
-  }, []);
-
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{headerShown: false}}>
-        {hasSession ? (
-          <Stack.Screen name="Timeline" component={Timeline} />
-        ) : (
-          <>
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Sign" component={Sign} />
-          </>
-        )}
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{headerShown: false}}>
+          <Stack.Screen name="Intro" component={Intro} />
+          <Stack.Screen name="Finish" component={Finish} />
+          <Stack.Screen name="Questions" component={Questions} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 
