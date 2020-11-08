@@ -17,6 +17,7 @@ const Intro = (props) => {
   const [modalFlag, setModalFlag] = useState(false);
 
   const startGame = (selectedCategory) => {
+    // axios.get(`https://opentdb.com/api.php?amount=10&category=${selectedCategory.id}&type=boolean`)
     axios.get(`https://opentdb.com/api.php?`, {
       params: {
         amount: 10,
