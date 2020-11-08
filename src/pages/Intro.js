@@ -6,13 +6,13 @@ import {
   TouchableOpacity,
   Animated,
 } from 'react-native';
-import {CountdownCircleTimer} from 'react-native-countdown-circle-timer';
 import {useDispatch} from 'react-redux';
 import {introPage} from './styles';
 import axios from 'axios';
-import {CategorySelectModal} from '../components';
+import {CategorySelectModal, TimerComponent} from '../components';
 
 const Intro = (props) => {
+  const [timerFlag, setTimerFlag] = useState(false);
   const [counterFlag, setCounterFlag] = useState(false);
   const [modalFlag, setModalFlag] = useState(false);
   const dispatch = useDispatch();
@@ -25,6 +25,7 @@ const Intro = (props) => {
           amount: 10,
           category: selectedCategory.id,
           type: 'boolean',
+          encode: 'base64'
         },
       })
       .then((response) => {
@@ -36,6 +37,7 @@ const Intro = (props) => {
       });
 
     setModalFlag(false);
+    setTimerFlag(true);
     setCounterFlag(true);
   };
 
@@ -43,25 +45,7 @@ const Intro = (props) => {
     <SafeAreaView style={{flex: 1}}>
       <View style={{flex: 1}}>
         <View style={introPage.container}>
-          <Text style={introPage.bannerText}>Trivia!</Text>
-        </View>
-
-        <View style={{backgroundColor: '#3949ab', alignItems: 'center'}}>
-          <CountdownCircleTimer
-            isPlaying={counterFlag}
-            duration={5}
-            onComplete={() => props.navigation.navigate('Questions')}
-            colors={[
-              ['#fff176', 0.4],
-              ['#ba68c8', 0.4],
-              ['#ff8a65', 0.2],
-            ]}>
-            {({remainingTime, animatedColor}) => (
-              <Animated.Text style={{fontSize: 60, color: animatedColor}}>
-                {remainingTime}
-              </Animated.Text>
-            )}
-          </CountdownCircleTimer>
+          <Text style={introPage.bannerText}>Tırı Vırı!</Text>
         </View>
 
         <View style={introPage.container}>
@@ -76,6 +60,15 @@ const Intro = (props) => {
           visibility={modalFlag}
           onClose={() => setModalFlag(false)}
           onCategorySelect={startGame}
+        />
+
+        <TimerComponent
+          visibility={timerFlag}
+          counterFlag={counterFlag}
+          onTimerCompleted={() => {
+            setTimerFlag(false)
+            props.navigation.navigate("Questions")
+          }}
         />
       </View>
     </SafeAreaView>

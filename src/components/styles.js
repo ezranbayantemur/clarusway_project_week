@@ -42,7 +42,7 @@ export const questionItem = StyleSheet.create({
   questionText: {
     color: 'white',
     fontSize: 30,
-    fontFamily: 'Ubuntu-Regular',
+    // fontFamily: 'Ubuntu-Regular',
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -62,6 +62,6 @@ export const questionItem = StyleSheet.create({
   buttonText: {
     fontSize: 40,
     color: 'white',
-    fontFamily: 'IndieFlower-Regular',
+    fontFamily: 'Pacifico-Regular'
   },
 });
